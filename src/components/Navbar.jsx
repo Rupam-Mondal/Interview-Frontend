@@ -9,7 +9,7 @@ const Navbar = () => {
   const { auth,setAuth } = useContext(UserContext);
 
   return (
-    <div className="fixed top-0 right-0 w-full bg-black/30 backdrop-blur-lg shadow-lg px-5 py-4 flex justify-between items-center">
+    <div className="fixed z-10 top-0 right-0 w-full bg-black/30 backdrop-blur-lg shadow-lg px-5 py-4 flex justify-between items-center">
       {/* Logo */}
       <div className="text-xl font-bold text-white">Nav.</div>
 

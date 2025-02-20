@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import assets from "../assets/assest";
 import { useNavigate } from "react-router-dom";
+import { Particles } from "@/components/ui/particles";
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
@@ -17,7 +18,14 @@ const Auth = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black text-gray-300 w-screen h-screen flex flex-col justify-center items-center px-4">
+    <div className="bg-black text-gray-300 w-screen h-screen flex flex-col justify-center items-center px-4">
+      <Particles
+        className="absolute inset-0"
+        quantity={100}
+        ease={80}
+        color="#ffffff"
+        refresh
+      />
       <button
         onClick={() => navigate("/")}
         className="absolute top-10 right-10  p-2 rounded-full transition duration-300"
@@ -25,7 +33,7 @@ const Auth = () => {
         <img src={assets.crossicon} alt="Close" className="w-6 h-6" />
       </button>
 
-      <div className="bg-gray-800 p-10 rounded-xl shadow-2xl w-full max-w-md text-center">
+      <div className="border border-white bg-gray-900/50  p-10 rounded-xl shadow-2xl w-full max-w-md text-center">
         <h1 className="text-4xl font-extrabold text-[#38BDF8] mb-6">
           {auth === "login" ? "Welcome Back!" : "Create an Account"}
         </h1>
@@ -61,7 +69,7 @@ const Auth = () => {
           />
           <button
             type="submit"
-            className="w-full bg-[#38BDF8] text-white py-3 rounded-lg font-semibold shadow-md hover:bg-[#2a9cc8] transition duration-300"
+            className="w-full bg-[#38BDF8] text-white py-3 rounded-lg font-semibold shadow-md hover:bg-[#2a5cc8] transition duration-300"
           >
             {auth === "login" ? "Login" : "Sign Up"}
           </button>
