@@ -5,6 +5,7 @@ export default UserContext;
 
 export const UserProvider = ({ children }) => {
   const [auth, setAuth] = useState("login");
-  let value = { auth, setAuth };
+  const [userId, setUserId] = useState(null);
+  let value = { auth, setAuth, userId, setUserId };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

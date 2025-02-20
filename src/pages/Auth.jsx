@@ -70,6 +70,7 @@ const Auth = () => {
           <button
             type="submit"
             className="w-full bg-[#38BDF8] text-white py-3 rounded-lg font-semibold shadow-md hover:bg-[#2a5cc8] transition duration-300"
+            onClick={() => navigate(`/dashboard/${Math.floor(Math.random() * 10000)}`)}
           >
             {auth === "login" ? "Login" : "Sign Up"}
           </button>
