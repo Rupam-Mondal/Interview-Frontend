@@ -11,9 +11,9 @@ Welcome to the **Interview Practice Website**! This platform helps users practic
 
 ## 🛠️ Tech Stack
 - **Frontend:** React.js
-- **State Management:** (if any, e.g., Redux, Context API)
-- **Styling:** (CSS, Tailwind, Styled Components, etc.)
-- **API Calls:** (Axios, Fetch API, etc.)
+- **State Management:** (Context API)
+- **Styling:** (Tailwind, Styled Components)
+- **API Calls:** (Axios)
 
 ## 📦 Installation
 1. Clone the repository:
