@@ -1,8 +1,52 @@
-# React + Vite
+# Interview Practice Website (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Interview Practice Website**! This platform helps users practice interview-type questions based on their **stream** and **difficulty level** (Basic, Moderate, or Advanced). The system evaluates answers and provides marks accordingly.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- Select your **stream** (e.g., Computer Science, Mechanical, Electrical, etc.).
+- Choose a **difficulty level** (Basic, Moderate, Advanced).
+- Solve curated interview questions.
+- Receive **instant feedback** with scores.
+- Interactive and responsive UI built with **React**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Frontend:** React.js
+- **State Management:** (if any, e.g., Redux, Context API)
+- **Styling:** (CSS, Tailwind, Styled Components, etc.)
+- **API Calls:** (Axios, Fetch API, etc.)
+
+## 📦 Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sandipan-seth/Interview-frontEnd.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Interview-frontEnd
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+
+## 📜 Usage
+1. Open the application in your browser at `http://localhost:3000`.
+2. Select your **stream** and **difficulty level**.
+3. Start practicing interview questions.
+4. Receive marks and improve your skills!
+
+## 🎯 Contributing
+We welcome contributions! Follow these steps:
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature-branch`
+3. Make your changes and commit: `git commit -m "Added new feature"`
+4. Push to the branch: `git push origin feature-branch`
+5. Open a **Pull Request**.
+
+
+
+
