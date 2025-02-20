@@ -1,5 +1,6 @@
 import UserContext from '@/contexts/UserContext';
 import React, { useContext } from 'react'
+import { Particles } from '../ui/particles';
 
 const Content = () => {
     const { userId } = useContext(UserContext);
