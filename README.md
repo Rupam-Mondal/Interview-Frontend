@@ -30,7 +30,7 @@ Welcome to the **Interview Practice Website**! This platform helps users practic
    ```
 4. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## 📜 Usage
