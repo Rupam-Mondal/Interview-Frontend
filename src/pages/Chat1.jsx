@@ -7,7 +7,8 @@ import UserContext from "@/contexts/UserContext";
 const Chat1 = () => {
   const navigate = useNavigate();
   const { chatid } = useParams();
-  const { userId,course,setCourse, level, setLevel } = useContext(UserContext);
+  const { userId, course, setCourse, level, setLevel } =
+    useContext(UserContext);
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center relative">
@@ -80,7 +81,12 @@ const Chat1 = () => {
           </div>
 
           {/* Start Course Button */}
-          <button className="mt-4 px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition duration-300 w-full text-center">
+          <button
+            className="mt-4 px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition duration-300 w-full text-center"
+            onClick={() => {
+              navigate(`/InterView/${course}/${level}`);
+            }}
+          >
             Start Interview
           </button>
         </div>

@@ -10,9 +10,7 @@ const Home = () => {
   return (
     <div className="bg-black text-gray-300 w-screen min-h-fit flex flex-col font-poppins">
       <Navbar />
-
       <Background />
-
       <Footer />
     </div>
   );

@@ -14,7 +14,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard/:userid" element={<Dashboard />} />
         <Route path="/StartInterview/:chatid" element={<Chat1 />} />
-        <Route path="/InterView" element={<InterViewQuestions />} />
+        <Route path="/InterView/:course/:level" element={<InterViewQuestions />} />
       </Routes>
     </>
   );
