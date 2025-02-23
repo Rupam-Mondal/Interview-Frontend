@@ -1,4 +1,4 @@
-import { Mic, Mic2Icon, Send } from "lucide-react";
+import { Delete, Mic, Mic2Icon, Send, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 const Questions = ({ question }) => {
@@ -6,19 +6,18 @@ const Questions = ({ question }) => {
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
   const [speaking, setSpeaking] = useState(false);
 
- const handleSubmit = (e) => {
-   e.preventDefault(); // Prevent form from refreshing if inside a form
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form from refreshing if inside a form
 
-   if (answer.trim() !== "" && (!speaking || (e.key && e.key === "Enter"))) {
-     setSubmittedAnswer(answer);
-     setAnswer(""); // Clear input field after submission
-   }
- };
-
+    if (answer.trim() !== "" && (!speaking || (e.key && e.key === "Enter"))) {
+      setSubmittedAnswer(answer);
+      setAnswer("");
+    }
+  };
 
   const voiceMessage = () => {
     setSpeaking(!speaking);
-    if(!speaking){
+    if (!speaking) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
@@ -70,7 +69,17 @@ const Questions = ({ question }) => {
 
       {/* Display Answer */}
       {submittedAnswer && (
-        <p className="text-green-400 mt-2">Ans: {submittedAnswer}</p>
+        <div className="flex justify-between">
+          <p className="text-green-400 mt-2">Ans: {submittedAnswer}</p>
+          <button
+            className="bg-red-500 p-2 rounded-md hover:bg-red-400"
+            onClick={() => {
+              setSubmittedAnswer("");
+            }}
+          >
+            <Trash size={20} />
+          </button>
+        </div>
       )}
     </div>
   );
