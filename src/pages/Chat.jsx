@@ -1,48 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Mic, Send } from "lucide-react";
 import { Particles } from "@/components/ui/particles";
 import assets from "@/assets/assest";
 import UserContext from "@/contexts/UserContext";
 
-const Chat = () => {
+const Chat1 = () => {
   const navigate = useNavigate();
   const { chatid } = useParams();
-  const [messages, setMessages] = useState([
-    { text: "Hey! How are you?", sender: "other" },
-    { text: "I'm good, what about you?", sender: "me" },
-  ]);
-  const [speaking, setSpeaking] = useState(false);
-  const [input, setInput] = useState("");
-  const [course,setCourse] = useState("AI");
-  const [level, setLevel] = useState("Medium");
-  const { userId } = useContext(UserContext);
-
-  const sendMessage = () => {
-    if (input.trim() === "") return;
-    setMessages([...messages, { text: input, sender: "me" }]);
-    setInput("");
-  };
-
-  const voiceMessage = () => {
-    setSpeaking(!speaking);
-    if(!speaking){
-      const recognition = new window.webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = "en-IN";
-      recognition.start();
-
-      recognition.onresult = (e) => {
-        const transcript = e.results[0][0].transcript;
-        setInput(transcript);
-        setSpeaking(false);
-      };
-    }
-  };
+  const { userId, course, setCourse, level, setLevel } =
+    useContext(UserContext);
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="bg-black text-white min-h-screen flex flex-col items-center relative">
+      {/* Particle Effect */}
       <Particles
         className="absolute inset-0"
         quantity={100}
@@ -51,89 +21,78 @@ const Chat = () => {
         refresh
       />
 
-      <div className="p-4 bg-gray-900 text-xl font-semibold border-b border-gray-700 flex items-center justify-between">
-        <p>Chat ID: {chatid}</p>
+      {/* Header */}
+      <div className="w-full p-4 text-xl fixed top-0 left-0 right-0 bg-gray-900/70 flex items-center justify-between shadow-md z-50">
+        <p className="text-lg md:text-xl font-bold">Chat ID: {chatid}</p>
+        <button
+          onClick={() => navigate(`/dashboard/${userId}`)}
+          className="p-2 rounded-full bg-red-600 hover:bg-red-500 transition duration-300 shadow-lg"
+          title="Close Chat"
+        >
+          <img
+            src={assets.crossicon}
+            alt="Close"
+            className="w-5 h-5 md:w-6 md:h-6"
+          />
+        </button>
+      </div>
 
-        <div className="mt-3 flex flex-col md:flex-row gap-2 text-sm">
-          <div className="flex items-center gap-2">
-            <select
-              id="course"
-              className="bg-gray-800 text-white px-3 py-1 rounded-lg outline-none"
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
-            >
-              <option value="Data Science">Data Science</option>
-              <option value="AI">AI</option>
-              <option value="UI/UX">UI/UX</option>
-            </select>
+      {/* Course Selection Section */}
+      <div className="flex justify-center items-center w-full h-screen px-6">
+        <div className="flex flex-col items-center gap-6 bg-gray-900/70 p-8 rounded-2xl shadow-lg max-w-lg w-full">
+          <h2 className="text-2xl md:text-3xl font-bold">Select Your Course</h2>
+
+          <div className="flex flex-col md:flex-row items-center gap-6 w-full">
+            {/* Course Dropdown */}
+            <div className="flex flex-col items-start w-full">
+              <label htmlFor="course" className="text-sm text-gray-400 mb-1">
+                Choose a Course
+              </label>
+              <select
+                id="course"
+                className="bg-gray-800 text-white px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer w-full"
+                value={course}
+                onChange={(e) => setCourse(e.target.value)}
+              >
+                <option value="Data Science">Data Science</option>
+                <option value="AI">AI</option>
+                <option value="UI/UX">UI/UX</option>
+                <option value="MERN Stack">MERN Stack</option>
+                <option value="Macine Learning">Machine Learning</option>
+              </select>
+            </div>
+
+            {/* Level Dropdown */}
+            <div className="flex flex-col items-start w-full">
+              <label htmlFor="level" className="text-sm text-gray-400 mb-1">
+                Choose Difficulty
+              </label>
+              <select
+                id="level"
+                className="bg-gray-800 text-white px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer w-full"
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+              >
+                <option value="Beginner">Beginner</option>
+                <option value="Medium">Medium</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <select
-              id="level"
-              className="bg-gray-800 text-white px-3 py-1 rounded-lg outline-none"
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-            >
-              <option value="Beginner">Beginner</option>
-              <option value="Medium">Medium</option>
-              <option value="Advanced">Advanced</option>
-            </select>
-          </div>
+          {/* Start Course Button */}
           <button
-            onClick={() => navigate(`/dashboard/${userId}`)}
-            className="p-2 rounded-full transition duration-300 bg-red-600 hover:bg-red-500"
+            className="mt-4 px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition duration-300 w-full text-center"
+            onClick={() => {
+              navigate(`/InterView/${course}/${level}`);
+            }}
           >
-            <img src={assets.crossicon} alt="Close" className="w-4 h-4" />
+            Start Interview
           </button>
         </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`max-w-xs px-4 py-2 rounded-lg ${
-              msg.sender === "me"
-                ? "bg-blue-600 ml-auto"
-                : "bg-gray-800 text-gray-300"
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
-      </div>
-
-      <div className="p-4 bg-gray-900 flex items-center border-t border-gray-700">
-        <input
-          type="text"
-          className="flex-1 bg-gray-800 px-4 py-2 rounded-lg outline-none text-white"
-          placeholder="Type a message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        />
-
-        <button
-          className={`ml-2 p-2 ${
-            !speaking
-              ? "bg-blue-600 hover:bg-blue-500"
-              : "bg-red-600 scale-150 hover:bg-red-500"
-          } rounded-lg `}
-          onClick={voiceMessage}
-        >
-          <Mic className="w-5 h-5" />
-        </button>
-
-        <button
-          className="ml-2 p-2 bg-blue-600 rounded-lg hover:bg-blue-500"
-          onClick={sendMessage}
-        >
-          <Send className="w-5 h-5" />
-        </button>
       </div>
     </div>
   );
 };
 
-export default Chat;
+export default Chat1;

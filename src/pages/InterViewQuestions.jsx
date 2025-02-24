@@ -17,7 +17,7 @@ const InterViewQuestions = () => {
         "What is React Hooks?",
         "What is Redux?",
       ]);
-    }, 5000);
+    }, 2000);
   }, []);
 
   return (

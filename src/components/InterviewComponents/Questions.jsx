@@ -1,4 +1,4 @@
-import { Delete, Mic, Mic2Icon, Send, Trash } from "lucide-react";
+import { Mic, Send, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 const Questions = ({ question }) => {
