@@ -7,11 +7,12 @@ const Questions = ({ question }) => {
   const [speaking, setSpeaking] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form from refreshing if inside a form
+    e.preventDefault();
 
     if (answer.trim() !== "" && (!speaking || (e.key && e.key === "Enter"))) {
       setSubmittedAnswer(answer);
       setAnswer("");
+      
     }
   };
 
