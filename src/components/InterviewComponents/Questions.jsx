@@ -12,7 +12,6 @@ const Questions = ({ question }) => {
     if (answer.trim() !== "" && (!speaking || (e.key && e.key === "Enter"))) {
       setSubmittedAnswer(answer);
       setAnswer("");
-      
     }
   };
 
