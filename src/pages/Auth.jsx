@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Particles } from "@/components/ui/particles";
 import { AlertTriangle, Loader, Loader2 } from "lucide-react";
 import useSignin from "@/hooks/useSignin";
+import useSignup from "@/hooks/useSignup";
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
@@ -15,7 +16,8 @@ const Auth = () => {
   const navigate = useNavigate();
   const [validationerror, setValidationError] = useState(false);
   const [validationmessage, setValidationMessage] = useState("");
-  const { isPending: signinpending, isSuccess, error, mutateAsync } = useSignin();
+  const { isPending: signinpending, isSuccess, error, mutateAsync:Signinfunction } = useSignin();
+  const { isPending:signuppending, isSuccess:signupsuccess, error:signuperror, mutateAsync:signupfunction } = useSignup();
 
 
   async function handleSubmit(e) {
@@ -33,10 +35,26 @@ const Auth = () => {
         password: password,
       }
       console.log(LoginObject);
-      await mutateAsync(LoginObject);
+      await Signinfunction(LoginObject);
     }
     else {
-      console.log("hi")
+      console.log(auth)
+      if (!email || !username || !password) {
+        setValidationError(true);
+        setValidationMessage("Please fill all the fields");
+        return;
+      }
+      if(password !== confirmpassword){
+        setValidationError(true);
+        setValidationMessage("Password and Confirm Password should be same");
+        return;
+      }
+      const SignupObject = {
+        email: email,
+        username: username,
+        password: password
+      }
+      await signupfunction(SignupObject);
     }
   }
 
