@@ -4,6 +4,7 @@ import assets from "../assets/assest";
 import { useNavigate } from "react-router-dom";
 import { Particles } from "@/components/ui/particles";
 import { AlertTriangle } from "lucide-react";
+import useSignin from "@/hooks/useSignin";
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
@@ -14,9 +15,10 @@ const Auth = () => {
   const navigate = useNavigate();
   const [validationerror, setValidationError] = useState(false);
   const [validationmessage, setValidationMessage] = useState("");
+  const { isPending, isSuccess, error, mutateAsync } = useSignin();
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     console.log(auth)
     if (auth === "login") {
@@ -31,6 +33,7 @@ const Auth = () => {
         password: password,
       }
       console.log(LoginObject);
+      await mutateAsync(LoginObject);
     }
     else {
       console.log("hi")
