@@ -13,23 +13,29 @@ const Auth = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const [validationerror, setValidationError] = useState(false);
-  const [validationmessage , setValidationMessage] = useState("");
+  const [validationmessage, setValidationMessage] = useState("");
 
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    if (!username || !email || !password || !confirmpassword) {
-      setValidationMessage("Fill in all details")
-      setValidationError(true);
-      return;
+    console.log(auth)
+    if (auth === "login") {
+      if (!email || !username || !password) {
+        setValidationError(true);
+        setValidationMessage("Please fill all the fields");
+        return;
+      }
+      const LoginObject = {
+        email: email,
+        username: username,
+        password: password,
+      }
+      console.log(LoginObject);
     }
-
-    if (password !== confirmpassword) {
-      setValidationMessage("Passwords are not same.");
-      setValidationError(true);
-      return;
+    else {
+      console.log("hi")
     }
-  };
+  }
 
   return (
     <div className="bg-black text-gray-300 w-screen h-screen flex flex-col justify-center items-center px-4">
@@ -59,17 +65,15 @@ const Auth = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {auth !== "login" && (
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              autoComplete="off"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
-            />
-          )}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="off"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
+          />
           <input
             type="text"
             name="username"
@@ -117,6 +121,10 @@ const Auth = () => {
               setAuth(auth === "login" ? "signup" : "login")
               setValidationError(false);
               setValidationMessage("");
+              setEmail("");
+              setUsername("");
+              setPassword("");
+              setConfirmPassword("");
             }}
             className="text-[#38BDF8] font-semibold hover:underline"
           >
