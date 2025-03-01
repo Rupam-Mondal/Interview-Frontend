@@ -3,7 +3,7 @@ import UserContext from "../contexts/UserContext";
 import assets from "../assets/assest";
 import { useNavigate } from "react-router-dom";
 import { Particles } from "@/components/ui/particles";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Loader, Loader2 } from "lucide-react";
 import useSignin from "@/hooks/useSignin";
 
 const Auth = () => {
@@ -15,7 +15,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const [validationerror, setValidationError] = useState(false);
   const [validationmessage, setValidationMessage] = useState("");
-  const { isPending, isSuccess, error, mutateAsync } = useSignin();
+  const { isPending: signinpending, isSuccess, error, mutateAsync } = useSignin();
 
 
   async function handleSubmit(e) {
@@ -110,9 +110,16 @@ const Auth = () => {
           }
           <button
             type="submit"
-            className="w-full bg-[#38BDF8] text-white py-3 rounded-lg font-semibold shadow-md hover:bg-[#2a5cc8] transition duration-300"
+            className="w-full text-white rounded-lg font-semibold shadow-md hover:bg-[#2a5cc8] transition duration-300 flex justify-center items-center"
           >
-            {auth === "login" ? "Login" : "Sign Up"}
+            {
+              signinpending ? (
+                <div className="w-full h-full py-2 flex rounded-lg justify-center items-center bg-[#38BDF8]"><Loader size={35} className="animate-spin text-black"/></div>
+              ):
+              (
+                  <div className="w-full h-full py-2 flex rounded-lg justify-center items-center bg-[#38BDF8]">{auth === "login" ? "Log in" : "Sign up"}</div>
+              )
+            }
           </button>
         </form>
         <p className="mt-6 text-gray-400">
