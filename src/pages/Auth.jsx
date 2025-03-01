@@ -3,18 +3,32 @@ import UserContext from "../contexts/UserContext";
 import assets from "../assets/assest";
 import { useNavigate } from "react-router-dom";
 import { Particles } from "@/components/ui/particles";
+import { AlertTriangle } from "lucide-react";
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [validationerror, setValidationError] = useState(false);
+  const [validationmessage , setValidationMessage] = useState("");
 
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!username || !email || !password || !confirmpassword) {
+      setValidationMessage("Fill in all details")
+      setValidationError(true);
+      return;
+    }
+
+    if (password !== confirmpassword) {
+      setValidationMessage("Passwords are not same.");
+      setValidationError(true);
+      return;
+    }
   };
 
   return (
@@ -37,6 +51,13 @@ const Auth = () => {
         <h1 className="text-4xl font-extrabold text-[#38BDF8] mb-6">
           {auth === "login" ? "Welcome Back!" : "Create an Account"}
         </h1>
+        {validationerror && (
+          <div className="flex items-center w-full p-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-lg">
+            <AlertTriangle className="w-5 h-5 mr-2 text-red-700" />
+            <span className="font-semibold">{validationmessage}</span>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {auth !== "login" && (
             <input
@@ -67,10 +88,22 @@ const Auth = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
           />
+          {
+            auth !== "login" && (
+              <input
+                type="confirmpassword"
+                name="confirmpassword"
+                placeholder="confirmpassword"
+                autoComplete="off"
+                value={confirmpassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
+              />
+            )
+          }
           <button
             type="submit"
             className="w-full bg-[#38BDF8] text-white py-3 rounded-lg font-semibold shadow-md hover:bg-[#2a5cc8] transition duration-300"
-            onClick={() => navigate(`/dashboard/${Math.floor(Math.random() * 10000)}`)}
           >
             {auth === "login" ? "Login" : "Sign Up"}
           </button>
@@ -80,7 +113,11 @@ const Auth = () => {
             ? "Don't have an account? "
             : "Already have an account? "}
           <button
-            onClick={() => setAuth(auth === "login" ? "signup" : "login")}
+            onClick={() => {
+              setAuth(auth === "login" ? "signup" : "login")
+              setValidationError(false);
+              setValidationMessage("");
+            }}
             className="text-[#38BDF8] font-semibold hover:underline"
           >
             {auth === "login" ? "Sign up" : "Log in"}
