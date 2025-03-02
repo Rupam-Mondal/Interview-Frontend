@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Particles } from "../ui/particles";
 import assets from "@/assets/assest";
 import { useNavigate } from "react-router-dom";
 import { ScrollProgress } from "../magicui/scroll-progress";
+import UserContext from "@/contexts/UserContext";
 
 const Background = () => {
+  const {user, setUser} =useContext(UserContext);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser)); // Convert string to object
+      }
+    }
+  }, []);
+
   const navigate = useNavigate();
   return (
     <>
@@ -31,7 +42,12 @@ const Background = () => {
           <button
             className="hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-lg text-lg shadow-lg transition-all duration-300 border border-white text-white/50 hover:shadow-xl"
             onClick={() => {
-              navigate("/auth");
+              if(localStorage.getItem("token")){
+                navigate(`/dashboard/${user.id}`);
+              }
+              else{
+                navigate("/auth");
+              }
             }}
           >
             Get Started for Free
