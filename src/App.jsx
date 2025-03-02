@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import InterViewQuestions from "./pages/InterViewQuestions";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Profile from "./pages/Profile";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard/:userid" element={<Dashboard />} />
           <Route path="/StartInterview/:chatid" element={<Chat />} />
           <Route path="/InterView/:course/:level" element={<InterViewQuestions />} />
+          <Route path="/profile/:userid" element={<Profile />} />
         </Routes>
       </QueryClientProvider>
     </>
