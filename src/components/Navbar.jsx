@@ -22,13 +22,15 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(()=>{},[localStorage.getItem("token")])
+
   return (
     <div className="fixed z-10 top-0 right-0 w-full bg-black/30 backdrop-blur-lg shadow-lg px-5 py-4 flex justify-between items-center">
       {/* Logo */}
       <div className="text-xl font-bold text-white">Nav.</div>
 
       {/* Buttons */}
-      {user ? (
+      {localStorage.getItem("token") ? (
         <div className="relative" ref={dropdownRef}>
           <div
             className="h-12 w-12 cursor-pointer transition-all duration-200 active:scale-95"
