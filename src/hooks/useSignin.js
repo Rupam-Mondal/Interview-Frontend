@@ -10,6 +10,9 @@ function useSignin(){
             }
             else{
                 console.log(response);
+                localStorage.setItem('token', response.data.token);
+                const userObject = JSON.stringify(response.data);
+                localStorage.setItem('user', userObject);
             }
         },
         onError: (data) => {

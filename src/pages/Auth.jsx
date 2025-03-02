@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import assets from "../assets/assest";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +57,12 @@ const Auth = () => {
       await signupfunction(SignupObject);
     }
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isSuccess]);
 
   return (
     <div className="bg-black text-gray-300 w-screen h-screen flex flex-col justify-center items-center px-4">
