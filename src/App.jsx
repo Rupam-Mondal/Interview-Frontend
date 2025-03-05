@@ -8,6 +8,7 @@ import InterViewQuestions from "./pages/InterViewQuestions";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Profile from "./pages/Profile";
 import { Toaster } from "./components/ui/sonner";
+import AiGuidence from "./pages/AiGuidence";
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ function App() {
           <Route path="/StartInterview/:chatid" element={<Chat />} />
           <Route path="/InterView/:course/:level" element={<InterViewQuestions />} />
           <Route path="/profile/:userid" element={<Profile />} />
+          <Route path="/AI-Guidance" element={<AiGuidence/>} />
         </Routes>
         <Toaster />
       </QueryClientProvider>
