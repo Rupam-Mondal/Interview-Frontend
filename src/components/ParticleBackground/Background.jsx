@@ -5,6 +5,7 @@ import { ScrollProgress } from "../magicui/scroll-progress";
 import UserContext from "@/contexts/UserContext";
 import Features from "../Features/Feature";
 import Heroimage from "../Heroimage/Heroimage";
+import { TerminalDemo } from "../Terminal/Terminal";
 
 const Background = () => {
   const { user, setUser } = useContext(UserContext);
@@ -62,7 +63,9 @@ const Background = () => {
       {/* Features Section */}
       <Features />
 
-      {/* About us */}
+      <div className="w-full flex justify-center items-center">
+        <TerminalDemo />
+      </div>
       {/* About Section */}
       <section className="py-20 px-8 text-center relative">
         <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20">
