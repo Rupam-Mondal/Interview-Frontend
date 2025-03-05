@@ -140,8 +140,8 @@ const Auth = () => {
           {
             auth !== "login" && (
               <input
-                type="confirmpassword"
-                name="confirmpassword"
+                type="password"
+                name="password"
                 placeholder="confirmpassword"
                 autoComplete="off"
                 value={confirmpassword}

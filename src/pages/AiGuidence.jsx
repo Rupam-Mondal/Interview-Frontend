@@ -1,13 +1,16 @@
+import { useAskAi } from "@/hooks/useAskAi";
 import { useState } from "react";
 import { FaRobot } from "react-icons/fa";
+import { toast } from "sonner";
 
 function AiGuidance() {
     const [techStack, setTechStack] = useState("Select Tech Stack");
     const [question, setQuestion] = useState("");
     const [response, setResponse] = useState("");
+    const { isPending, isSuccess, error, mutateAsync: askanything } = useAskAi();
 
     const predefinedQuestions = [
-        "Roadmap for this interview",
+        "Roadmap for a interview",
         "How should I behave in an interview?",
         "Main focus in an interview",
         "How to answer difficult questions?",
@@ -15,9 +18,32 @@ function AiGuidance() {
     ];
 
     const handleAsk = (query) => {
-        if (!query.trim()) return;
-        setResponse(`AI: This is a smart answer for "${query}" in ${techStack}`);
+        const input = document.getElementById("question");
+        input.value = query;
+        setQuestion(query);
     };
+
+    async function askAi() {
+        const input = document.getElementById("question");
+        if (input.value === "") {
+            toast("Please enter or select a question");
+            return;
+        }
+        const QuestionObject = {
+            question: question,
+        }
+        try {
+            const data = await askanything(QuestionObject);
+            setResponse(data?.data);
+        } catch (error) {
+            toast("Something went wrong", {
+                style: {
+                    backgroundColor: "red",
+                    color: "white",
+                },
+            });
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
@@ -68,14 +94,31 @@ function AiGuidance() {
                         placeholder="Ask something else..."
                         className="w-full px-4 py-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
                         value={question}
+                        id="question"
                         onChange={(e) => setQuestion(e.target.value)}
                     />
-                    <button
-                        className="mt-4 bg-[#38BDF8] px-6 py-2 rounded-lg text-lg font-semibold hover:bg-[#2ca4cf] transition-all w-full"
-                        onClick={() => handleAsk(question)}
-                    >
-                        Ask AI
-                    </button>
+                    {isPending ? (
+                        <button
+                            className="mt-4 bg-gradient-to-r from-[#38BDF8] to-[#2ca4cf] px-6 py-3 rounded-lg text-lg font-semibold w-full flex justify-center items-center gap-3 cursor-not-allowed shadow-lg shadow-[#38BDF8]/50 animate-pulse"
+                            disabled
+                        >
+                            <div className="flex space-x-2">
+                                <span className="w-3 h-3 bg-white rounded-full animate-bounce"></span>
+                                <span className="w-3 h-3 bg-white rounded-full animate-bounce delay-150"></span>
+                                <span className="w-3 h-3 bg-white rounded-full animate-bounce delay-300"></span>
+                            </div>
+                            <span className="text-white text-lg font-semibold">Analyzing...</span>
+                        </button>
+                    ) : (
+                        <button
+                            className="mt-4 bg-gradient-to-r from-[#38BDF8] to-[#2ca4cf] px-6 py-3 rounded-lg text-lg font-semibold text-white hover:shadow-xl  transition-all w-full"
+                            onClick={askAi}
+                        >
+                            Ask AI
+                        </button>
+                    )}
+
+
                 </div>
 
                 {/* AI Response */}
