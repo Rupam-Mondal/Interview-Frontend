@@ -56,16 +56,25 @@ const Auth = () => {
         username: username,
         password: password
       }
-      await signupfunction(SignupObject);
-      toast("Signup Successful, login to continue", {
-        style: {
-          backgroundColor: "green",
-          color: "white",
-        },
-      });
-      setAuth("login");
+      try {
+        await signupfunction(SignupObject);
+        toast("Signup Successful, login to continue", {
+            style: {
+              backgroundColor: "green",
+              color: "white",
+            },
+          });
+          setAuth("login");
+      } catch (error) {
+          toast("Signup failed, Please try again", {
+            style: {
+              backgroundColor: "red",
+              color: "white",
+            },
+          });
+        }
+      }
     }
-  }
 
   useEffect(() => {
     if (isSuccess) {
