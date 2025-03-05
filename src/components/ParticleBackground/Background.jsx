@@ -46,7 +46,10 @@ const Background = () => {
           className="mt-4 bg-[#38BDF8] text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-white hover:text-[#38BDF8] hover:shadow-xl"
           onClick={() => {
             if (localStorage.getItem("token")) {
-              navigate(`/dashboard/${user.id}`);
+              const featuresSection = document.getElementById("features");
+              if (featuresSection) {
+                featuresSection.scrollIntoView({ behavior: "smooth" });
+              }
             } else {
               navigate("/auth");
             }

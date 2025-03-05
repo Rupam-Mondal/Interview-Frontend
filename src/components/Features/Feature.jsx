@@ -1,6 +1,6 @@
 function Features() {
     return (
-        <section className="py-16 px-8 text-center mb-10 relative">
+        <section id="features" className="py-16 px-8 text-center mb-10 relative">
             <h2 className="text-5xl font-extrabold text-white mb-6">
                 🚀 <span className="bg-gradient-to-r from-blue-400 to-cyan-500 text-transparent bg-clip-text">Our Features</span>
             </h2>
