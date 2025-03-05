@@ -55,6 +55,7 @@ const Auth = () => {
         password: password
       }
       await signupfunction(SignupObject);
+      setAuth("login");
     }
   }
 
