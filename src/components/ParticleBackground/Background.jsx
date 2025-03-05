@@ -7,17 +7,19 @@ import Features from "../Features/Feature";
 import Heroimage from "../Heroimage/Heroimage";
 
 const Background = () => {
-  const {user, setUser} =useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
-        setUser(JSON.parse(storedUser)); // Convert string to object
+        setUser(JSON.parse(storedUser));
       }
     }
   }, []);
 
   const navigate = useNavigate();
+
   return (
     <>
       <ScrollProgress className="top-[75px]" />
@@ -28,50 +30,45 @@ const Background = () => {
         color="#ffffff"
         refresh
       />
-      <div>
-        {/* Main Content */}
-        <div className="min-h-[100vh] flex flex-col justify-center gap-5 items-center text-center px-6 space-y-6">
-          
-            <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-3xl md:text-6xl font-semibold leading-none text-transparent">
-              Welcome to{"\n"}Our{" "}
-              <span className="text-4xl md:text-8xl text-[#38BDF8]">
-                InterView
-              </span>{" "}
-              Website
-            </span>
 
-          <button
-            className="hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-lg text-lg shadow-lg transition-all duration-300 border border-white text-white/50 hover:shadow-xl"
-            onClick={() => {
-              if(localStorage.getItem("token")){
-                navigate(`/dashboard/${user.id}`);
-              }
-              else{
-                navigate("/auth");
-              }
-            }}
-          >
-            Get Started for Free
-          </button>
-        </div>
+      <div className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 space-y-6">
+        {/* Hero Section */}
+        <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight">
+          Elevate Your <span className="text-[#38BDF8]">Interview</span> Skills
+        </h1>
 
-        <hr className="w-3/4 mx-auto border-t-2 border-gray-600 mb-6" />
+        <p className="text-lg md:text-xl text-white max-w-3xl">
+          Unlock AI-powered guidance, real-time feedback, and expert-curated
+          resources to ace your next interview with confidence.
+        </p>
 
-        <section className="py-16 px-8 text-center">
-          <h2 className="text-4xl font-bold text-[#38BDF8]">About Us</h2>
-          <p className="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
-            We aim to provide the best platform to help individuals prepare for
-            interviews with ease. Our resources, guidance, and interactive tools
-            make interview preparation seamless.
-          </p>
-        </section>
-
-
-        {/* Features Section */}
-        <Features/>
-
-        <Heroimage/>
+        <button
+          className="mt-4 bg-[#38BDF8] text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-white hover:text-[#38BDF8] hover:shadow-xl"
+          onClick={() => {
+            if (localStorage.getItem("token")) {
+              navigate(`/dashboard/${user.id}`);
+            } else {
+              navigate("/auth");
+            }
+          }}
+        >
+          Get Started for Free
+        </button>
       </div>
+
+      {/* About Section */}
+      <section className="py-16 px-8 text-center">
+        <h2 className="text-5xl font-bold text-[#38BDF8]">About Us</h2>
+        <p className="mt-6 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          We revolutionize interview preparation with AI-driven insights,
+          personalized mock interviews, and expert tips. Our goal is to empower
+          you with the confidence and skills needed to succeed.
+        </p>
+      </section>
+
+      {/* Features Section */}
+      <Features />
+      <Heroimage />
     </>
   );
 };

@@ -1,7 +1,7 @@
 function Features(){
     return(
         <>
-            <section className="py-16 px-8 text-center bg-gray-800/30 mb-10">
+            <section className="py-16 px-8 text-center mb-10">
                 <h2 className="text-4xl font-bold text-[#38BDF8]">Features</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8 max-w-5xl mx-auto">
                     <div className="p-6 bg-gray-900 rounded-lg shadow-lg hover:-translate-y-4 hover:scale-105 transition-all duration-300 hover:shadow-slate-500">
