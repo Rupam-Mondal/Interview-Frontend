@@ -3,6 +3,7 @@ import { FaRobot } from "react-icons/fa";
 
 function AiGuidance() {
     const [techStack, setTechStack] = useState("Select Tech Stack");
+    const [question, setQuestion] = useState("");
     const [response, setResponse] = useState("");
 
     const predefinedQuestions = [
@@ -14,6 +15,7 @@ function AiGuidance() {
     ];
 
     const handleAsk = (query) => {
+        if (!query.trim()) return;
         setResponse(`AI: This is a smart answer for "${query}" in ${techStack}`);
     };
 
@@ -43,7 +45,7 @@ function AiGuidance() {
             {/* AI Chat Section */}
             <section className="max-w-3xl w-full bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-semibold text-[#38BDF8] flex items-center gap-2">
-                    <FaRobot className="text-[#38BDF8]" /> Select a Question
+                    <FaRobot className="text-[#38BDF8]" /> Ask AI a Question
                 </h2>
 
                 {/* Predefined Questions */}
@@ -57,6 +59,23 @@ function AiGuidance() {
                             {q}
                         </button>
                     ))}
+                </div>
+
+                {/* Custom Question Input */}
+                <div className="mt-6">
+                    <input
+                        type="text"
+                        placeholder="Ask something else..."
+                        className="w-full px-4 py-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                    />
+                    <button
+                        className="mt-4 bg-[#38BDF8] px-6 py-2 rounded-lg text-lg font-semibold hover:bg-[#2ca4cf] transition-all w-full"
+                        onClick={() => handleAsk(question)}
+                    >
+                        Ask AI
+                    </button>
                 </div>
 
                 {/* AI Response */}
