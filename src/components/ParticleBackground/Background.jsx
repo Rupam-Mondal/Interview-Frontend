@@ -56,19 +56,33 @@ const Background = () => {
         </button>
       </div>
 
-      {/* About Section */}
-      <section className="py-16 px-8 text-center">
-        <h2 className="text-5xl font-bold text-[#38BDF8]">About Us</h2>
-        <p className="mt-6 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-          We revolutionize interview preparation with AI-driven insights,
-          personalized mock interviews, and expert tips. Our goal is to empower
-          you with the confidence and skills needed to succeed.
-        </p>
-      </section>
-
       {/* Features Section */}
       <Features />
-      <Heroimage />
+
+      {/* About us */}
+      {/* About Section */}
+      <section className="py-20 px-8 text-center relative">
+        <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20">
+          <h2 className="text-5xl font-extrabold text-[#38BDF8] drop-shadow-md">
+            About Us
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed">
+            We are revolutionizing interview preparation with
+            <span className="text-[#38BDF8] font-semibold"> AI-driven insights</span>,
+            personalized mock interviews, and expert-curated tips.
+            Our goal is to empower you with the
+            <span className="text-[#38BDF8] font-semibold"> confidence and skills</span>
+            needed to succeed in any interview.
+          </p>
+        </div>
+      </section>
+
+
+
+      {/* Image section */}
+      <div className="relative">
+        <Heroimage />
+      </div>
     </>
   );
 };
