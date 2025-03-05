@@ -6,6 +6,7 @@ import { Particles } from "@/components/ui/particles";
 import { AlertTriangle, Loader, Loader2 } from "lucide-react";
 import useSignin from "@/hooks/useSignin";
 import useSignup from "@/hooks/useSignup";
+import { toast } from "sonner"
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
@@ -36,6 +37,7 @@ const Auth = () => {
       }
       console.log(LoginObject);
       await Signinfunction(LoginObject);
+      toast("Logged in");
     }
     else {
       console.log(auth)
@@ -55,6 +57,12 @@ const Auth = () => {
         password: password
       }
       await signupfunction(SignupObject);
+      toast("Signup Successful, login to continue", {
+        style: {
+          backgroundColor: "green",
+          color: "white",
+        },
+      });
       setAuth("login");
     }
   }
