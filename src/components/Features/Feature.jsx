@@ -19,7 +19,7 @@ function Features() {
               description:
                 "Practice real interview scenarios with AI-driven simulations.",
               icon: "🎤",
-              route: "/StartInterview/" + user.id,
+              route: "/StartInterview/" + user?.id,
             },
             {
               title: "Question Bank",

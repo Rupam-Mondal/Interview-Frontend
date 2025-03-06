@@ -50,6 +50,11 @@ const Chat1 = () => {
                 <option value="UI/UX">UI/UX</option>
                 <option value="MERN Stack">MERN Stack</option>
                 <option value="Macine Learning">Machine Learning</option>
+                <option value="DSA">DSA</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="C++">C++</option>
               </select>
             </div>
 
