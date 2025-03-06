@@ -6,8 +6,8 @@ import UserContext from "@/contexts/UserContext";
 
 const Chat1 = () => {
   const navigate = useNavigate();
-  const { chatid } = useParams();
-  const { userId, course, setCourse, level, setLevel } =
+  const { userid } = useParams();
+  const { course, setCourse, level, setLevel } =
     useContext(UserContext);
 
   return (
@@ -23,9 +23,10 @@ const Chat1 = () => {
 
       {/* Header */}
       <div className="w-full p-4 text-xl fixed top-0 left-0 right-0 bg-gray-900/70 flex items-center justify-between shadow-md z-50">
-        <p className="text-lg md:text-xl font-bold">Chat ID: {chatid}</p>
+        <p className="text-lg md:text-xl font-bold">User ID: {userid}</p>
         <button
-          onClick={() => navigate(`/dashboard/${userId}`)}
+          // onClick={() => navigate(`/dashboard/${userid}`)}
+          onClick={()=> window.history.back()}
           className="p-2 rounded-full bg-red-600 hover:bg-red-500 transition duration-300 shadow-lg"
           title="Close Chat"
         >

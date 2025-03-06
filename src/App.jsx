@@ -19,10 +19,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard/:userid" element={<Dashboard />} />
-          <Route path="/StartInterview/:chatid" element={<Chat />} />
-          <Route path="/InterView/:course/:level" element={<InterViewQuestions />} />
+          <Route path="/StartInterview/:userid" element={<Chat />} />
+          <Route
+            path="/InterView/:course/:level"
+            element={<InterViewQuestions />}
+          />
           <Route path="/profile/:userid" element={<Profile />} />
-          <Route path="/AI-Guidance" element={<AiGuidence/>} />
+          <Route path="/AI-Guidance" element={<AiGuidence />} />
         </Routes>
         <Toaster />
       </QueryClientProvider>

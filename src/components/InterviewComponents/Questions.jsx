@@ -1,10 +1,21 @@
-import { Mic, Send, Trash } from "lucide-react";
+import { Mic, Nfc, Send, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 const Questions = ({ question }) => {
   const [answer, setAnswer] = useState("");
   const [submittedAnswer, setSubmittedAnswer] = useState(null);
   const [speaking, setSpeaking] = useState(false);
+
+  const [text, setText] = useState(question);
+
+  const speak = () => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert("Text-to-Speech is not supported in your browser.");
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +46,15 @@ const Questions = ({ question }) => {
   return (
     <div className="bg-gray-900 p-4 m-4 rounded-lg shadow-md flex flex-col gap-3">
       {/* Question Text */}
-      <p className="text-white text-lg font-medium">{question}</p>
+      <div className="flex justify-between items-center">
+        <p className="text-white text-lg font-medium">{question}</p>
+        <button
+          className="bg-violet-600 hover:bg-violet-500 p-2 rounded-lg text-white transition"
+          onClick={speak}
+        >
+          <Nfc size={20} />
+        </button>
+      </div>
 
       {/* Input & Button Section */}
       <div className="flex items-center gap-2">
