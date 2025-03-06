@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Particles } from "@/components/ui/particles";
 import assets from "@/assets/assest";
 import UserContext from "@/contexts/UserContext";
+import { ArrowLeft } from "lucide-react";
 
 const Chat1 = () => {
   const navigate = useNavigate();
@@ -21,21 +22,10 @@ const Chat1 = () => {
         refresh
       />
 
-      {/* Header */}
-      <div className="w-full p-4 text-xl fixed top-0 left-0 right-0 bg-gray-900/70 flex items-center justify-between shadow-md z-50">
-        <p className="text-lg md:text-xl font-bold">User ID: {userid}</p>
-        <button
-          // onClick={() => navigate(`/dashboard/${userid}`)}
-          onClick={()=> window.history.back()}
-          className="p-2 rounded-full bg-red-600 hover:bg-red-500 transition duration-300 shadow-lg"
-          title="Close Chat"
-        >
-          <img
-            src={assets.crossicon}
-            alt="Close"
-            className="w-5 h-5 md:w-6 md:h-6"
-          />
-        </button>
+
+     {/* Header */}
+      <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
+        <ArrowLeft  className="w-6 h-6" onClick={()=> window.history.back()}/>
       </div>
 
       {/* Course Selection Section */}
