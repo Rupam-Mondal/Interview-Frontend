@@ -1,22 +1,26 @@
 import React, { useContext, useEffect } from "react";
 import { Particles } from "../ui/particles";
-import assets from "@/assets/assest";
 import { useNavigate } from "react-router-dom";
 import { ScrollProgress } from "../magicui/scroll-progress";
 import UserContext from "@/contexts/UserContext";
+import Features from "../Features/Feature";
+import Heroimage from "../Heroimage/Heroimage";
+import { TerminalDemo } from "../Terminal/Terminal";
 
 const Background = () => {
-  const {user, setUser} =useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
-        setUser(JSON.parse(storedUser)); // Convert string to object
+        setUser(JSON.parse(storedUser));
       }
     }
   }, []);
 
   const navigate = useNavigate();
+
   return (
     <>
       <ScrollProgress className="top-[75px]" />
@@ -27,78 +31,63 @@ const Background = () => {
         color="#ffffff"
         refresh
       />
-      <div>
-        {/* Main Content */}
-        <div className="min-h-[100vh] flex flex-col justify-center gap-5 items-center text-center px-6 space-y-6">
-          
-            <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-3xl md:text-6xl font-semibold leading-none text-transparent">
-              Welcome to{"\n"}Our{" "}
-              <span className="text-4xl md:text-8xl text-[#38BDF8]">
-                InterView
-              </span>{" "}
-              Website
-            </span>
 
-          <button
-            className="hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-lg text-lg shadow-lg transition-all duration-300 border border-white text-white/50 hover:shadow-xl"
-            onClick={() => {
-              if(localStorage.getItem("token")){
-                navigate(`/dashboard/${user.id}`);
+      <div className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 space-y-6">
+        {/* Hero Section */}
+        <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight">
+          Elevate Your <span className="text-[#38BDF8]">Interview</span> Skills
+        </h1>
+
+        <p className="text-lg md:text-xl text-white max-w-3xl">
+          Unlock AI-powered guidance, real-time feedback, and expert-curated
+          resources to ace your next interview with confidence.
+        </p>
+
+        <button
+          className="mt-4 bg-[#38BDF8] text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-white hover:text-[#38BDF8] hover:shadow-xl"
+          onClick={() => {
+            if (localStorage.getItem("token")) {
+              const featuresSection = document.getElementById("features");
+              if (featuresSection) {
+                featuresSection.scrollIntoView({ behavior: "smooth" });
               }
-              else{
-                navigate("/auth");
-              }
-            }}
-          >
-            Get Started for Free
-          </button>
-        </div>
+            } else {
+              navigate("/auth");
+            }
+          }}
+        >
+          Get Started for Free
+        </button>
+      </div>
 
-        <hr className="w-3/4 mx-auto border-t-2 border-gray-600 mb-6" />
+      {/* Features Section */}
+      <Features />
 
-        <section className="py-16 px-8 text-center">
-          <h2 className="text-4xl font-bold text-[#38BDF8]">About Us</h2>
-          <p className="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
-            We aim to provide the best platform to help individuals prepare for
-            interviews with ease. Our resources, guidance, and interactive tools
-            make interview preparation seamless.
+      <div className="w-full flex justify-center items-center">
+        <TerminalDemo />
+      </div>
+      {/* About Section */}
+      <section className="py-20 px-8 text-center relative">
+        <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20">
+          <h2 className="text-5xl font-extrabold text-[#38BDF8] drop-shadow-md">
+            About Us
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed">
+            We are revolutionizing interview preparation with
+            <span className="text-[#38BDF8] font-semibold"> AI-driven insights</span>,
+            personalized mock interviews, and expert-curated tips.
+            Our goal is to empower you with the
+            <span className="text-[#38BDF8] font-semibold"> confidence and skills</span>
+            needed to succeed in any interview.
           </p>
-        </section>
-
-        <section className="py-16 px-8 text-center bg-gray-800/30 mb-10">
-          <h2 className="text-4xl font-bold text-[#38BDF8]">Features</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8 max-w-5xl mx-auto">
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg hover:-translate-y-4 hover:scale-105 transition-all duration-300 hover:shadow-slate-500">
-              <h3 className="text-xl font-semibold">Mock Interviews</h3>
-              <p className="mt-2 text-gray-400">
-                Practice real interview scenarios with AI-driven simulations.
-              </p>
-            </div>
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg hover:-translate-y-4 hover:scale-105 transition-all duration-300 hover:shadow-slate-500">
-              <h3 className="text-xl font-semibold">Question Bank</h3>
-              <p className="mt-2 text-gray-400">
-                Access hundreds of frequently asked interview questions.
-              </p>
-            </div>
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg hover:-translate-y-4 hover:scale-105 transition-all duration-300 hover:shadow-slate-500">
-              <h3 className="text-xl font-semibold">Expert Guidance</h3>
-              <p className="mt-2 text-gray-400">
-                Get tips and insights from industry professionals.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Image Section */}
-        <div className="absolute w-full h-full hidden md:block bg-gradient-to-b to-black from-transparent z-[1] pointer-events-none" />
-
-        <div className="w-full h-screen flex justify-center items-center pb-10 md:p-10 ">
-          <img
-            src={assets.image1}
-            alt="Illustration"
-            className="max-w-[90%] md:max-w-[60%] rounded-lg shadow-lg transition duration-500 hover:shadow-[0px_0px_100px_30px_rgba(255,255,0,0.2)] border border-white border-opacity-40 md:my-10 "
-          />
         </div>
+      </section>
+
+
+
+      {/* Image section */}
+      <div className="relative">
+        <Heroimage />
       </div>
     </>
   );

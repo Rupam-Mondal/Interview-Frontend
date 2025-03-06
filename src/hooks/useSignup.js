@@ -14,6 +14,7 @@ function useSignup(){
         },
         onError: (data) => {
             console.log(data);
+            return data;
         }
     });
 

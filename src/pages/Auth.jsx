@@ -6,6 +6,7 @@ import { Particles } from "@/components/ui/particles";
 import { AlertTriangle, Loader, Loader2 } from "lucide-react";
 import useSignin from "@/hooks/useSignin";
 import useSignup from "@/hooks/useSignup";
+import { toast } from "sonner"
 
 const Auth = () => {
   const { auth, setAuth } = useContext(UserContext);
@@ -36,6 +37,7 @@ const Auth = () => {
       }
       console.log(LoginObject);
       await Signinfunction(LoginObject);
+      toast("Logged in");
     }
     else {
       console.log(auth)
@@ -54,9 +56,25 @@ const Auth = () => {
         username: username,
         password: password
       }
-      await signupfunction(SignupObject);
+      try {
+        await signupfunction(SignupObject);
+        toast("Signup Successful, login to continue", {
+            style: {
+              backgroundColor: "green",
+              color: "white",
+            },
+          });
+          setAuth("login");
+      } catch (error) {
+          toast("Signup failed, Please try again", {
+            style: {
+              backgroundColor: "red",
+              color: "white",
+            },
+          });
+        }
+      }
     }
-  }
 
   useEffect(() => {
     if (isSuccess) {
@@ -122,8 +140,8 @@ const Auth = () => {
           {
             auth !== "login" && (
               <input
-                type="confirmpassword"
-                name="confirmpassword"
+                type="password"
+                name="password"
                 placeholder="confirmpassword"
                 autoComplete="off"
                 value={confirmpassword}
