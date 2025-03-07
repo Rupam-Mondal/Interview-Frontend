@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Profile from "./pages/Profile";
 import { Toaster } from "./components/ui/sonner";
 import AiGuidence from "./pages/AiGuidence";
+import Questionpage from "./pages/Questionpage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ function App() {
           />
           <Route path="/profile/:userid" element={<Profile />} />
           <Route path="/AI-Guidance" element={<AiGuidence />} />
+          <Route path="/QuestionBank" element={<Questionpage/>}/>
         </Routes>
         <Toaster />
       </QueryClientProvider>
