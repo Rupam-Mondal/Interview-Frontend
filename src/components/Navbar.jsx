@@ -4,11 +4,14 @@ import UserContext from "../contexts/UserContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const { auth, setAuth } = useContext(UserContext);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user")) || null;
+  });
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -22,7 +25,12 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {}, [localStorage.getItem("token")]);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null); // Update state
+    navigate("/");
+  };
 
   return (
     <div className="fixed z-50 top-0 right-0 w-full bg-black/30 backdrop-blur-lg shadow-lg px-5 py-4 flex justify-between items-center">
@@ -30,7 +38,7 @@ const Navbar = () => {
       <div className="text-xl font-bold text-white">Mockmate AI</div>
 
       {/* Buttons */}
-      {localStorage.getItem("token") ? (
+      {user ? (
         <div className="relative" ref={dropdownRef}>
           <div
             className="h-12 w-12 cursor-pointer transition-all duration-200 active:scale-95"
@@ -49,18 +57,12 @@ const Navbar = () => {
                 >
                   Profile
                 </li>
-
                 <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                   Settings
                 </li>
                 <li
                   className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                    setUser(null);
-                    navigate("/auth");
-                  }}
+                  onClick={handleLogout}
                 >
                   Logout
                 </li>
