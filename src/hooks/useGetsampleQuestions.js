@@ -2,19 +2,20 @@ import { Getsuggestions } from "@/Apis/Questions";
 import { useMutation } from "@tanstack/react-query";
 
 export function useGetsampleQuestion(){
-    const { isPending, isSuccess, error, mutateAsync } = useMutation({
+    const { data, isPending, isSuccess, error, mutateAsync } = useMutation({
         mutationFn: Getsuggestions,
-        onSuccess:(data) => {
-            console.log(data);
-            return data;
+        onSuccess:(response) => {
+            console.log(response);
+            return response;
         },
-        onError:(data) => {
-            console.log(data);
-            return data;
+        onError:(response) => {
+            console.log(response);
+            return response;
         }
     });
 
     return {
+        data,
         isPending,
         isSuccess,
         error,
