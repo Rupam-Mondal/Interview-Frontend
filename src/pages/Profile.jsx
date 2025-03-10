@@ -1,4 +1,3 @@
-import Content from "@/components/dashboardComponent/Content";
 import Card from "@/components/profileComponent/Card";
 import { Particles } from "@/components/ui/particles";
 import { ArrowLeft } from "lucide-react";
@@ -29,7 +28,6 @@ const Profile = () => {
       {/* User Profile Content */}
       <div className="z-10 w-full max-w-4xl flex flex-col items-center gap-6">
         <div className="overflow-hidden w-full">
-          {/* <Content user={user} /> */}
           <Card user={user} />
         </div>
       </div>
