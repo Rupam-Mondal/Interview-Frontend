@@ -5,13 +5,13 @@ function Heroimage() {
     return (
       <div className="z-10">
         {/* <Particles */}
-        <Particles
-          className="absolute h-fit inset-2"
+        {/* <Particles
+          className="absolute inset-2"
           quantity={200}
           ease={80}
           color="#ffffff"
           refresh
-        />
+        /> */}
         {/* Overlay for Better Visibility */}
         {/* <div className="absolute w-full h-full bg-black bg-opacity-40 z-1 pointer-events-none" /> */}
 
