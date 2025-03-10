@@ -1,5 +1,6 @@
 import Questions from "@/components/InterviewComponents/Questions";
 import { Particles } from "@/components/ui/particles";
+import { ArrowLeft } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -32,6 +33,10 @@ const InterViewQuestions = () => {
       />
 
       {/* Page Header */}
+      <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
+        <ArrowLeft className="w-6 h-6" onClick={() => window.history.back()} />
+      </div>
+
       <div className="text-center mb-6 px-6">
         <h1 className="text-3xl md:text-4xl font-bold">
           Questions on <span className="text-blue-500">{course}</span> ({level}{" "}
@@ -59,7 +64,6 @@ const InterViewQuestions = () => {
           </div>
         </>
       )}
-
     </div>
   );
 };
