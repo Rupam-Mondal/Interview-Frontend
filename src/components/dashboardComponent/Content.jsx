@@ -1,27 +1,21 @@
-import UserContext from "@/contexts/UserContext";
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  BarChart,
-  Bar,
   Legend,
 } from "recharts";
 
-const Content = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
+const Content = ({ user }) => {
   const navigate = useNavigate();
 
-  // Hardcoded Data (No Real-time Updates)
-  const totalInterviews = 20; // Fixed total interviews count
-
+  // Hardcoded Data
+  const totalInterviews = 20;
   const interviewsByTopic = [
     { topic: "DSA", count: 7 },
     { topic: "Web Dev", count: 5 },
@@ -29,114 +23,58 @@ const Content = () => {
     { topic: "System", count: 5 },
   ];
 
-  const avgMarksData = [
-    { date: "Mon", avgMarks: 3.5 },
-    { date: "Tue", avgMarks: 4.0 },
-    { date: "Wed", avgMarks: 4.2 },
-    { date: "Thu", avgMarks: 4.5 },
-    { date: "Fri", avgMarks: 4.3 },
-  ];
-
-  const interviewTrend = [
-    { day: "Mon", count: 2 },
-    { day: "Tue", count: 3 },
-    { day: "Wed", count: 4 },
-    { day: "Thu", count: 5 },
-    { day: "Fri", count: 6 },
-  ];
-
-  // Fetch user data on mount
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    }
-    setLoading(false);
-  }, [setUser]);
-
   return (
-    <div
-      className="bg-white shadow-lg rounded-lg p-6 max-w-4xl w-full text-center cursor-pointer transition-transform"
-      onClick={() =>
-        navigate(`/StartInterview/${Math.floor(Math.random() * 10000)}`)
-      }
-    >
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Dashboard</h1>
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
+      {/* Dashboard Header */}
+      <h2 className="text-center text-xl font-semibold text-gray-800">
+        Dashboard: {user.username}
+      </h2>
+      <p className="text-center text-gray-600 mt-1">
+        Total Interviews Done:{" "}
+        <span className="text-indigo-600 font-bold">{totalInterviews}</span>
+      </p>
 
-      {/* Total Interviews Done */}
-      <div className="mt-4 text-lg font-semibold text-gray-700">
-        <p>
-          Total Interviews Done:{" "}
-          <span className="text-indigo-600">{totalInterviews}</span>
-        </p>
+      {/* User Profile Card */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-xs mt-5">
+        <div className="flex flex-col items-center">
+          <img
+            src={user.avatar}
+            alt="User Avatar"
+            className="w-24 h-24 rounded-full border-4 border-indigo-500 shadow-md"
+          />
+          <h1 className="mt-3 text-lg font-bold text-gray-800">
+            {user.username?.charAt(0).toUpperCase() + user.username.slice(1) ||
+              "Guest"}
+          </h1>
+          <p className="text-gray-500 text-sm">{user.email}</p>
+          <button
+            className="mt-4 px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-md transition-all duration-200 w-full"
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
+          >
+            Log Out
+          </button>
+        </div>
       </div>
 
-      {/* Small Graphs - Side by Side */}
-      <div className="grid grid-cols-2 gap-4 mt-6">
-        {/* Graph 1: Interviews by Topic */}
-        <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Interviews by Topic
-          </h2>
-          <ResponsiveContainer width="100%" height={150}>
-            <BarChart data={interviewsByTopic}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="topic" stroke="#333" />
-              <YAxis stroke="#333" />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="count" fill="#4F46E5" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Graph 2: Average Marks */}
-        <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Average Marks Over Time
-          </h2>
-          <ResponsiveContainer width="100%" height={150}>
-            <LineChart data={avgMarksData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#333" />
-              <YAxis stroke="#333" domain={[3, 5]} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="avgMarks"
-                stroke="#E63946"
-                strokeWidth={2}
-                dot={{ r: 5 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Graph 3: Interview Completion Trend */}
-        <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Interview Completion Trend
-          </h2>
-          <ResponsiveContainer width="100%" height={150}>
-            <LineChart data={interviewTrend}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" stroke="#333" />
-              <YAxis stroke="#333" />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="count"
-                stroke="#1D4ED8"
-                strokeWidth={2}
-                dot={{ r: 5 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+      {/* Chart Card */}
+      <div className="bg-white mt-6 p-4 rounded-2xl shadow-lg w-full max-w-xs">
+        <h3 className="text-sm font-semibold text-gray-700 text-center mb-3">
+          Interviews by Topic
+        </h3>
+        <ResponsiveContainer width="100%" height={180}>
+          <BarChart data={interviewsByTopic}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="topic" stroke="#333" />
+            <YAxis stroke="#333" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" fill="#4F46E5" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
