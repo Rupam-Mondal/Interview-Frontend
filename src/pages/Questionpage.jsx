@@ -3,71 +3,61 @@ import { useGetsampleQuestion } from "@/hooks/useGetsampleQuestions";
 import { Loader2 } from "lucide-react";
 
 function QuestionPage() {
-    const { isPending, isSuccess, error, mutateAsync } = useGetsampleQuestion();
+    const { isPending, mutateAsync } = useGetsampleQuestion();
     const [selectedTech, setSelectedTech] = useState("Mern stack");
-    const [questions, setQuestions] = useState([]);
+    const [data, setData] = useState(null);
 
     async function handleClick() {
-        try {
-            const data = await mutateAsync({ topic: selectedTech });
-            console.log("API Response:", data);
-
-            if (data?.questions && Array.isArray(data.questions)) {
-                setQuestions(data.questions);
-            } else {
-                console.error("Invalid data format: questions not found", data);
-                setQuestions([]);
-            }
-        } catch (err) {
-            console.error("Error fetching questions:", err);
-            setQuestions([]);
-        }
+        const response = await mutateAsync({ topic: selectedTech });
+        setData(response);
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-6 text-white">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-xl font-semibold text-center mb-4">Select a Tech Stack</h2>
-                <select
-                    className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none"
-                    value={selectedTech}
-                    onChange={(e) => setSelectedTech(e.target.value)}
-                >
-                    <option value="Mern stack">Mern stack</option>
-                    <option value="Python">Python</option>
-                    <option value="Java">Java</option>
-                    <option value="C++">C++</option>
-                </select>
-                <button
-                    onClick={handleClick}
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded flex items-center justify-center"
-                    disabled={isPending}
-                >
-                    {isPending ? <Loader2 className="animate-spin" /> : "Get Questions"}
-                </button>
-            </div>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white p-6">
+            {/* Main Container */}
+            <div className="w-[800px] h-[400px] flex flex-col md:flex-row gap-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700">
 
-            <div className="mt-6 w-full max-w-md">
-                {isPending && (
-                    <div className="flex justify-center items-center">
-                        <Loader2 className="animate-spin text-blue-500 w-10 h-10" />
+                {/* Left Section: Technology Selector */}
+                <div className="w-[280px] flex flex-col gap-6 p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
+                    <h1 className="text-xl font-bold text-blue-400 text-center">Select a Technology</h1>
+
+                    <select
+                        className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none border border-gray-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        value={selectedTech}
+                        onChange={(e) => setSelectedTech(e.target.value)}
+                    >
+                        <option value="Mern stack">MERN Stack</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                    </select>
+
+                    <button
+                        className="w-full p-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition duration-300 font-semibold text-white flex items-center justify-center gap-2 shadow-md active:scale-95"
+                        onClick={handleClick}
+                        disabled={isPending}
+                    >
+                        {isPending ? <Loader2 className="animate-spin" /> : "Fetch Questions"}
+                    </button>
+                </div>
+
+                {/* Right Section: Fixed Questions Box */}
+                <div className="w-[460px] h-[320px] flex flex-col p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
+                    <h2 className="text-xl font-semibold text-blue-400 mb-4">Questions</h2>
+
+                    {/* Scrollable Questions List */}
+                    <div className="h-[250px] overflow-y-auto space-y-3 pr-2">
+                        {data?.data?.questions.length > 0 ? (
+                            data.data.questions.map((v, i) => (
+                                <div key={i} className="p-3 bg-gray-700/80 rounded-lg border border-gray-600 hover:bg-gray-600 transition duration-200 shadow-md text-md font-medium">
+                                    {v}
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-gray-400 text-center">No questions available</p>
+                        )}
                     </div>
-                )}
-
-                {questions.length > 0 && (
-                    <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                        <h3 className="text-lg font-semibold mb-3">Suggested Questions</h3>
-                        <ul className="space-y-2">
-                            {questions.map((q, index) => (
-                                <li key={index} className="bg-gray-700 p-3 rounded">{q}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                {isSuccess && questions.length === 0 && (
-                    <p className="text-red-400 text-center mt-4">No questions found for this topic.</p>
-                )}
+                </div>
             </div>
         </div>
     );
