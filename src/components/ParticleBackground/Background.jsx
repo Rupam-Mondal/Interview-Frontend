@@ -24,13 +24,13 @@ const Background = () => {
   return (
     <>
       <ScrollProgress className="top-[75px]" />
-      <Particles
+      {/* <Particles
         className="absolute min-h-[250vh] inset-2"
         quantity={500}
         ease={80}
         color="#ffffff"
         refresh
-      />
+      /> */}
 
       <div className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 space-y-6">
 
