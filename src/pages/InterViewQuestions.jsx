@@ -1,5 +1,6 @@
 import Questions from "@/components/InterviewComponents/Questions";
 import { Particles } from "@/components/ui/particles";
+import { useInterview } from "@/hooks/useInterview";
 import { ArrowLeft } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -7,19 +8,6 @@ import { useParams } from "react-router-dom";
 const InterViewQuestions = () => {
   const { course, level } = useParams();
   const [questions, setQuestions] = useState(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setQuestions([
-        "What is React?",
-        "What is JSX?",
-        "What is Virtual DOM?",
-        "What is React Fiber?",
-        "What is React Hooks?",
-        "What is Redux?",
-      ]);
-    }, 2000);
-  }, []);
 
   return (
     <div className="bg-black w-screen min-h-screen text-white flex flex-col items-center relative py-10">

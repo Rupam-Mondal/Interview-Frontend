@@ -1,11 +1,27 @@
 import { GetIntervirewQuestions } from "@/Apis/AI";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-export function useInterview(object){
-    const {data , isSuccess , isLoading , isError , error} = useQuery({
-        queryKey: ['Interview'],
-        queryFn: () => GetIntervirewQuestions(object),
+export function useInterview(){
+    const { isPending, isSuccess, error, mutateAsync } = useMutation({
+        mutationFn:GetIntervirewQuestions,
+        onSuccess: (response) => {
+            if (response.success == false) {
+                throw new Error(response.message);
+            }
+            else {
+                console.log(response);
+                return response;
+            }
+        },
+        onError: (data) => {
+            console.log(data);
+            return data;
+        }
     });
-
-    return {data , isSuccess , isLoading , isError , error};
+    return {
+        isPending, 
+        isSuccess, 
+        error, 
+        mutateAsync
+    }
 }
