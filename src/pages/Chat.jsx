@@ -13,17 +13,14 @@ const Chat1 = () => {
     useContext(UserContext);
 
   const { isPending, isSuccess, error, mutateAsync } = useInterview();
-  async function handleclick(){
-    async () => {
-      const data = await mutateAsync({
-        topic: course,
-        experience: level
-      })
-      console.log(data?.data)
-      setQuestions(data?.data);
-      console.log(questions);
-      navigate(`/InterView/${course}/${level}`);
-    }
+  async function handleclick() {
+    const data = await mutateAsync({
+      topic: course,
+      experience: level
+    });
+    console.log(data?.data)
+    setQuestions(data?.data);
+    navigate(`/InterView/${course}/${level}`);
   }
 
   return (
@@ -38,9 +35,9 @@ const Chat1 = () => {
       />
 
 
-     {/* Header */}
+      {/* Header */}
       <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
-        <ArrowLeft  className="w-6 h-6" onClick={()=> window.history.back()}/>
+        <ArrowLeft className="w-6 h-6" onClick={() => window.history.back()} />
       </div>
 
       {/* Course Selection Section */}

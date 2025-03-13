@@ -1,13 +1,14 @@
 import Questions from "@/components/InterviewComponents/Questions";
 import { Particles } from "@/components/ui/particles";
+import UserContext from "@/contexts/UserContext";
 import { useInterview } from "@/hooks/useInterview";
 import { ArrowLeft } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 const InterViewQuestions = () => {
-  const { course, level } = useParams();
-  const [questions, setQuestions] = useState(null);
+  const { course, setCourse, level, setLevel, questions, setQuestions } =
+      useContext(UserContext);
 
   return (
     <div className="bg-black w-screen min-h-screen text-white flex flex-col items-center relative py-10">
