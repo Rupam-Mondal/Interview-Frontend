@@ -33,3 +33,18 @@ export async function GetIntervirewQuestions(InterviewObject){
         return null;
     }
 }
+
+export async function Analaysis(analysisObject){
+    try {
+        const token = localStorage.getItem('token');
+        const response = await AxiosInstance.post('/Interview/user/analysis', { analysisObject }, {
+            headers: {
+                'x-access-token': token
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log("Error in GetIntervirewQuestions", error);
+        return null;
+    }
+}

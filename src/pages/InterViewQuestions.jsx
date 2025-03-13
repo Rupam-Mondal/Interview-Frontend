@@ -1,14 +1,17 @@
 import Questions from "@/components/InterviewComponents/Questions";
 import { Particles } from "@/components/ui/particles";
 import UserContext from "@/contexts/UserContext";
-import { ArrowLeft } from "lucide-react";
+import { useAnalysis } from "@/hooks/useAnalysis";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import React, { useState, useContext } from "react";
 
 const InterViewQuestions = () => {
   const { course, level, questions } = useContext(UserContext);
   const [answers, setAnswers] = useState({});
+  const [apiResponse, setApiResponse] = useState(null);
 
-  
+  const { isPending, isSuccess, error, mutateAsync } = useAnalysis();
+
   const handleAnswerChange = (index, answer) => {
     setAnswers((prev) => ({
       ...prev,
@@ -17,9 +20,14 @@ const InterViewQuestions = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log(answers);
-    alert("Answers submitted successfully!");
+  const handleSubmit = async () => {
+    setApiResponse(null);
+    try {
+      const data = await mutateAsync(answers);
+      setApiResponse(data?.data);
+    } catch (err) {
+      setApiResponse("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -45,10 +53,32 @@ const InterViewQuestions = () => {
               <Questions key={index} question={question} onAnswerChange={(answer) => handleAnswerChange(index, answer)} />
             ))}
           </div>
-          <div className="mt-6">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300" onClick={handleSubmit}>
-              Submit Answers
+          <div className="mt-6 flex flex-col items-center">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2"
+              onClick={handleSubmit}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <>
+                  <Loader2 className="animate-spin w-5 h-5" /> Submitting...
+                </>
+              ) : (
+                "Submit Answers"
+              )}
             </button>
+
+            {isSuccess && apiResponse && (
+              <div className="mt-4 text-lg text-green-400 bg-gray-900 p-4 rounded-lg max-w-2xl text-center shadow-lg">
+                {apiResponse}
+              </div>
+            )}
+
+            {error && (
+              <div className="mt-4 text-lg text-red-400 bg-gray-900 p-4 rounded-lg max-w-2xl text-center shadow-lg">
+                Something went wrong. Please try again.
+              </div>
+            )}
           </div>
         </>
       )}
