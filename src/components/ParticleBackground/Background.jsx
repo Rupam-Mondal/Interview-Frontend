@@ -6,6 +6,7 @@ import UserContext from "@/contexts/UserContext";
 import Features from "../Features/Feature";
 import Heroimage from "../Heroimage/Heroimage";
 import { TerminalDemo } from "../Terminal/Terminal";
+import { FaUserFriends, FaTachometerAlt, FaChartBar, FaBalanceScale } from "react-icons/fa";
 
 const Background = () => {
   const { user, setUser } = useContext(UserContext);
@@ -20,6 +21,29 @@ const Background = () => {
   }, []);
 
   const navigate = useNavigate();
+  const cardData = [
+    {
+      title: "User Friendly",
+      icon: <FaUserFriends />,
+      description: "Our platform is designed with simplicity in mind, ensuring a smooth and intuitive user experience."
+    },
+    {
+      title: "Performance",
+      icon: <FaTachometerAlt />,
+      description: "Experience blazing-fast speed and optimized performance for seamless operations at all times."
+    },
+    {
+      title: "Statistic Chart",
+      icon: <FaChartBar />,
+      description: "Visualize key insights with real-time data analytics and interactive statistic charts."
+    },
+    {
+      title: "Proportion",
+      icon: <FaBalanceScale />,
+      description: "We maintain a perfect balance of features, ensuring efficiency and effectiveness in every aspect."
+    }
+  ];
+
 
   return (
     <>
@@ -69,32 +93,34 @@ const Background = () => {
 
 
       {/* Terminal Demo */}
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-center items-center min-h-screen">
         <TerminalDemo />
       </div>
 
 
 
       {/* About Section */}
-      <section className="py-20 px-8 text-center relative">
-        <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20">
-          <h2 className="text-5xl font-extrabold text-[#38BDF8] drop-shadow-md">
-            About Us
-          </h2>
-          <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed">
-            We are revolutionizing interview preparation with
-            <span className="text-[#38BDF8] font-semibold">
-              {" "}
-              AI-driven insights
-            </span>
-            , personalized mock interviews, and expert-curated tips. Our goal is
-            to empower you with the
-            <span className="text-[#38BDF8] font-semibold">
-              {" "}
-              confidence and skills
-            </span>
-            needed to succeed in any interview.
-          </p>
+
+      <section className="w-full flex flex-col justify-center items-center">
+        <h2 className="text-3xl font-bold text-white mb-10">Why People Choose Us?</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
+          {cardData.map((card, index) => (
+            <div
+              key={index}
+              className="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 
+                       hover:border-blue-500 hover:shadow-blue-500/50 transition-all duration-300
+                       flex flex-col items-center text-center"
+            >
+              {/* Icon */}
+              <div className="text-5xl text-blue-400 mb-4">{card.icon}</div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-semibold text-white mb-2">{card.title}</h3>
+
+              {/* Description */}
+              <p className="text-gray-300 text-sm">{card.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -4,12 +4,24 @@ import { Particles } from "@/components/ui/particles";
 import assets from "@/assets/assest";
 import UserContext from "@/contexts/UserContext";
 import { ArrowLeft } from "lucide-react";
+import { useInterview } from "@/hooks/useInterview";
 
 const Chat1 = () => {
   const navigate = useNavigate();
   const { userid } = useParams();
-  const { course, setCourse, level, setLevel } =
+  const { course, setCourse, level, setLevel, questions, setQuestions } =
     useContext(UserContext);
+
+  const { isPending, isSuccess, error, mutateAsync } = useInterview();
+  async function handleclick() {
+    const data = await mutateAsync({
+      topic: course,
+      experience: level
+    });
+    console.log(data?.data)
+    setQuestions(data?.data);
+    navigate(`/InterView/${course}/${level}`);
+  }
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center relative">
@@ -23,9 +35,9 @@ const Chat1 = () => {
       />
 
 
-     {/* Header */}
+      {/* Header */}
       <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
-        <ArrowLeft  className="w-6 h-6" onClick={()=> window.history.back()}/>
+        <ArrowLeft className="w-6 h-6" onClick={() => window.history.back()} />
       </div>
 
       {/* Course Selection Section */}
@@ -79,9 +91,7 @@ const Chat1 = () => {
           {/* Start Course Button */}
           <button
             className="mt-4 px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition duration-300 w-full text-center"
-            onClick={() => {
-              navigate(`/InterView/${course}/${level}`);
-            }}
+            onClick={handleclick}
           >
             Start Interview
           </button>
