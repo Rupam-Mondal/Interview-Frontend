@@ -21,7 +21,7 @@ const InterViewQuestions = () => {
   };
 
   const handleSubmit = async () => {
-    setApiResponse(null); // Ensure previous response is cleared before new request
+    setApiResponse(null);
     try {
       const data = await mutateAsync(answers);
       setApiResponse(data?.data);
