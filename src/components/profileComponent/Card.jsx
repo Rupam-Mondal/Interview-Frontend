@@ -60,23 +60,6 @@ const Card = ({ user }) => {
             Log Out
           </button>
         </div>
-
-        {/* Chart: Interviews by Topic */}
-        <div className="bg-white mt-6 p-4 rounded-lg shadow-md">
-          <h3 className="text-sm font-semibold text-gray-700 text-center mb-3">
-            Interviews by Topic
-          </h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={interviewsByTopic}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="topic" stroke="#333" />
-              <YAxis stroke="#333" />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="count" fill="#4F46E5" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
       </div>
     </div>
   );
