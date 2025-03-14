@@ -36,8 +36,22 @@ const Auth = () => {
         password: password,
       }
       console.log(LoginObject);
-      await Signinfunction(LoginObject);
-      toast("Logged in");
+      try {
+        await Signinfunction(LoginObject);
+        toast("Logged in", {
+          style: {
+            backgroundColor: "Green",
+            color: "white",
+          },
+        });
+      } catch (error) {
+        toast("Login failed, Please try again", {
+          style: {
+            backgroundColor: "red",
+            color: "white",
+          },
+        });
+      }
     }
     else {
       console.log(auth)
