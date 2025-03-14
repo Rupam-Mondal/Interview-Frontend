@@ -2,6 +2,10 @@ import Card from "@/components/profileComponent/Card";
 import { Particles } from "@/components/ui/particles";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -14,23 +18,43 @@ const Profile = () => {
 
   const [expandedInterview, setExpandedInterview] = useState(null);
 
-  // Function to delete an interview
+  // Delete an interview
   const handleDelete = (index) => {
     const updatedInterviews = interviews.filter((_, i) => i !== index);
     setInterviews(updatedInterviews);
     localStorage.setItem("interviews", JSON.stringify(updatedInterviews));
   };
 
+  // Extract Interview Names & Scores for Graph
+  const interviewNames = interviews.map((interview) => {
+    const response = interview.response || [];
+    return response.length > 1 ? response[response.length - 1] : "Unknown";
+  });
+
+  const interviewScores = interviews.map((interview) => {
+    const response = interview.response || [];
+    const score = response.length > 1 ? parseFloat(response[response.length - 2]) : 0;
+    return isNaN(score) ? 0 : score;
+  });
+
+  // Chart Data
+  const chartData = {
+    labels: interviewNames,
+    datasets: [
+      {
+        label: "Interview Scores",
+        data: interviewScores,
+        backgroundColor: "rgba(54, 162, 235, 0.6)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center relative px-6">
+    <div className="bg-black text-white min-h-screen flex flex-col items-center justify-start relative px-6 py-10 overflow-hidden">
       {/* Background Particles */}
-      <Particles
-        className="absolute inset-0 h-full"
-        quantity={150}
-        ease={80}
-        color="#ffffff"
-        refresh
-      />
+      <Particles className="absolute inset-0 h-full" quantity={120} ease={80} color="#ffffff" refresh />
 
       {/* Back Button */}
       <button
@@ -40,28 +64,26 @@ const Profile = () => {
         <ArrowLeft className="w-6 h-6" />
       </button>
 
-      {/* User Profile Content */}
-      <div className="z-10 w-full max-w-4xl flex flex-col items-center gap-6">
-        <div className="overflow-hidden w-full">
-          <Card user={user} />
-        </div>
+      {/* User Profile Card */}
+      <div className="z-10 w-full max-w-4xl flex flex-col items-center gap-8 pb-0">
+        <Card user={user} />
 
         {/* Stored Interviews Section */}
-        <div className="w-full bg-gray-900 p-6 rounded-lg shadow-lg">
-          <h2 className="text-xl font-semibold mb-4">Your Interviews</h2>
+        <div className="w-full bg-gray-900 p-6 rounded-xl shadow-lg pb-0">
+          <h2 className="text-2xl font-semibold text-white mb-4 text-center">Your Interviews</h2>
 
           {interviews.length === 0 ? (
-            <p className="text-gray-400">No interviews found.</p>
+            <p className="text-gray-400 text-center pb-0">No interviews found.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 pb-0">
               {interviews.map((interview, index) => {
                 const response = interview.response || [];
-                const topic = response.length > 0 ? response[response.length - 1] : "N/A";
+                const topic = response.length > 1 ? response[response.length - 1] : "N/A";
                 const score = response.length > 1 ? response[response.length - 2] : "N/A";
                 const details = response.slice(0, -2); // Exclude topic & score
 
                 return (
-                  <div key={index} className="bg-gray-800 p-4 rounded-lg">
+                  <div key={index} className="bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition mb-0">
                     {/* Header Section with Topic, Score & Delete Button */}
                     <div className="flex justify-between items-center">
                       <div
@@ -70,8 +92,8 @@ const Profile = () => {
                           setExpandedInterview(expandedInterview === index ? null : index)
                         }
                       >
-                        <h3 className="text-lg font-medium">{topic}</h3>
-                        <span className="text-sm bg-blue-600 px-3 py-1 rounded">
+                        <h3 className="text-xl font-medium text-white">{topic}</h3>
+                        <span className="text-sm bg-blue-600 px-3 py-1 rounded-md font-medium">
                           Score: {score}
                         </span>
                       </div>
@@ -79,15 +101,15 @@ const Profile = () => {
                       {/* Delete Button */}
                       <button
                         onClick={() => handleDelete(index)}
-                        className="ml-4 text-red-400 hover:text-red-600 transition-all"
+                        className="ml-4 text-red-500 hover:text-red-600 transition"
                       >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 className="w-6 h-6" />
                       </button>
                     </div>
 
                     {/* Expandable Interview Details */}
                     {expandedInterview === index && (
-                      <div className="mt-3 bg-gray-700 p-3 rounded space-y-2">
+                      <div className="mt-3 bg-gray-700 p-4 rounded-lg space-y-2">
                         {details.length > 0 ? (
                           details.map((item, idx) => (
                             <p key={idx} className="text-gray-300 text-sm">
@@ -105,6 +127,31 @@ const Profile = () => {
             </div>
           )}
         </div>
+
+        {/* 📊 Interview Score Graph */}
+        {interviews.length > 0 && interviewScores.some(score => score > 0) && (
+          <div className="w-full bg-gray-900 p-6 rounded-xl shadow-lg mt-6">
+            <h2 className="text-2xl font-semibold text-white text-center mb-4">Interview Score Graph</h2>
+            <div className="w-full h-72">
+              <Bar
+                data={chartData}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      suggestedMax: 25, // Max score is 25
+                      ticks: {
+                        stepSize: 5, // Better readability
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

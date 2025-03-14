@@ -1,54 +1,29 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
 
 const Card = ({ user }) => {
   const navigate = useNavigate();
 
-  // Hardcoded Data
-  const totalInterviews = 20;
-  const interviewsByTopic = [
-    { topic: "DSA", count: 7 },
-    { topic: "Web Dev", count: 5 },
-    { topic: "AI/ML", count: 3 },
-    { topic: "System", count: 5 },
-  ];
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 mt-20 md:mt-10">
-      <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-xl">
+    <div className="w-full max-w-lg">
+      <div className="bg-gray-900 w-full p-4 rounded-2xl shadow-xl text-white">
         {/* Dashboard Title */}
-        <h2 className="text-center text-xl font-semibold text-gray-800">
-          Dashboard: {user.username}
+        <h2 className="text-center text-xl font-semibold">
+          Dashboard: {user?.username || "Guest"}
         </h2>
 
-        {/* Total Interviews Info */}
-        <p className="text-center text-gray-600 mt-1">
-          Total Interviews Done:{" "}
-          <span className="text-indigo-600 font-bold">{totalInterviews}</span>
-        </p>
-
         {/* User Profile */}
-        <div className="flex flex-col items-center mt-5 bg-gray-50 p-5 rounded-lg shadow-md">
+        <div className="flex flex-col items-center mt-5 bg-gray-800 p-5 rounded-lg shadow-md">
           <img
-            src={user.avatar}
+            src={user?.avatar || "/default-avatar.png"}
             alt="User Avatar"
-            className="w-20 h-20 rounded-full border-4 border-indigo-500 shadow-md"
+            className="w-24 h-24 rounded-full border-4 border-blue-500 shadow-md"
           />
-          <h1 className="mt-3 text-lg font-bold text-gray-800">
-            {user.username?.charAt(0).toUpperCase() + user.username.slice(1) ||
-              "Guest"}
+          <h1 className="mt-3 text-lg font-bold capitalize">
+            {user?.username || "Guest"}
           </h1>
-          <p className="text-gray-500 text-sm">{user.email}</p>
+          <p className="text-gray-400 text-sm">{user?.email || "No email available"}</p>
+
           <button
             className="mt-3 px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition-all duration-200"
             onClick={() => {
