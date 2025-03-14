@@ -25,6 +25,10 @@ const InterViewQuestions = () => {
     try {
       const data = await mutateAsync(answers);
       setApiResponse(data?.data);
+      const interviewId = Date.now().toString();
+      const existingInterviews = JSON.parse(localStorage.getItem("interviews")) || [];
+      const updatedInterviews = [...existingInterviews, { id: interviewId, response: data?.data }];
+      localStorage.setItem("interviews", JSON.stringify(updatedInterviews));
     } catch (err) {
       setApiResponse(["Something went wrong. Please try again."]);
     }
