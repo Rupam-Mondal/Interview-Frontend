@@ -18,7 +18,7 @@ function Heroimage() {
         {/* Hero Content */}
         <div className="relative w-full h-screen flex flex-col md:flex-row justify-center items-center pb-10 md:p-10 z-10 gap-10">
           <img
-            src={assets.image1}
+            src={assets.image2}
             alt="Illustration"
             className="max-w-[95%] md:max-w-[40%] rounded-lg shadow-lg transition duration-500 hover:shadow-[0px_0px_50px_10px_rgba(252,211,77,0.5)] border border-white border-opacity-40 md:my-10"
           />
