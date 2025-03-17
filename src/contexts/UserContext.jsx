@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState(12345);
   const [user, setUser] = useState(null);
   
-  const [course, setCourse] = useState("AI");
+  const [course, setCourse] = useState("");
   const [level, setLevel] = useState("Medium");
   const [questions , setQuestions] = useState([]);
   let value = { auth, setAuth, userId, setUserId,course, setCourse, level, setLevel,user, setUser , questions , setQuestions };

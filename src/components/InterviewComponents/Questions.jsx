@@ -25,22 +25,50 @@ const Questions = ({ question, onAnswerChange }) => {
   };
 
   const voiceMessage = () => {
-    setSpeaking(!speaking);
     if (!speaking) {
+      setSpeaking(true);
       const recognition = new window.webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.continuous = true; // Keep listening even after pauses
+      recognition.interimResults = true; // Get live feedback while speaking
       recognition.lang = "en-IN";
-      recognition.start();
+
+      let finalTranscript = ""; // Store finalized text
 
       recognition.onresult = (e) => {
-        const transcript = e.results[0][0].transcript;
-        setAnswer(transcript);
-        onAnswerChange(transcript); // Update answer in parent
-        setSpeaking(false);
+        let interimTranscript = "";
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            finalTranscript += e.results[i][0].transcript + " "; // Append finalized text
+          } else {
+            interimTranscript += e.results[i][0].transcript + " "; // Temporary results
+          }
+        }
+
+        // Set final text + latest interim text (avoiding duplication)
+        setAnswer(finalTranscript + interimTranscript);
+        onAnswerChange(finalTranscript + interimTranscript);
       };
+
+      recognition.onend = () => {
+        if (speaking) {
+          recognition.start(); // Restart if the user hasn't stopped manually
+        }
+      };
+
+      recognition.start();
+
+      // Store reference to stop it later
+      window.recognitionInstance = recognition;
+    } else {
+      setSpeaking(false);
+      if (window.recognitionInstance) {
+        window.recognitionInstance.stop();
+      }
     }
   };
+
+
+
 
   return (
     <div className="bg-gray-900 p-4 m-4 rounded-lg shadow-md flex flex-col gap-3">
