@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useGetsampleQuestion } from "@/hooks/useGetsampleQuestions";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Particles } from "@/components/ui/particles";
 
 function QuestionPage() {
   const { isPending, mutateAsync } = useGetsampleQuestion();
@@ -15,7 +16,14 @@ function QuestionPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white p-6">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white p-6">
+    <Particles
+        className="absolute inset-0"
+        quantity={100}
+        ease={80}
+        color="#ffffff"
+        refresh
+      />
       <div
         className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer"
         onClick={() => navigate("/")}
@@ -23,9 +31,9 @@ function QuestionPage() {
         <ArrowLeft className="w-6 h-6" />
       </div>
       {/* Main Container */}
-      <div className="w-[800px] h-[400px] flex flex-col md:flex-row gap-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700">
+      <div className="w-[800px] h-[400px] flex flex-col md:flex-row gap-8 p-6 bg-gray-900/30 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700">
         {/* Left Section: Technology Selector */}
-        <div className="w-[280px] flex flex-col gap-6 p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
+        <div className="w-[280px] h-full flex flex-col gap-6 p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
           <h1 className="text-xl font-bold text-blue-400 text-center">
             Select a Technology
           </h1>
@@ -55,7 +63,7 @@ function QuestionPage() {
         </div>
 
         {/* Right Section: Fixed Questions Box */}
-        <div className="w-[460px] h-[320px] flex flex-col p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
+        <div className="w-[460px] h-full flex flex-col p-6 bg-gray-800/80 rounded-xl shadow-lg border border-gray-700">
           <h2 className="text-xl font-semibold text-blue-400 mb-4">
             Questions
           </h2>
