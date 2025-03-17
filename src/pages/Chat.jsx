@@ -27,8 +27,11 @@ const Chat1 = () => {
       <Particles className="absolute inset-0" quantity={100} ease={80} color="#ffffff" refresh />
 
       {/* Header */}
-      <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
-        <ArrowLeft className="w-6 h-6" onClick={() => window.history.back()} />
+      <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer"
+      onClick={()=>{
+        navigate("/");
+      }}>
+        <ArrowLeft className="w-6 h-6"  />
       </div>
 
       {/* Course Selection Section */}

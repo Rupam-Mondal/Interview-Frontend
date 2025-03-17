@@ -3,6 +3,7 @@ import { useAskAi } from "@/hooks/useAskAi";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { FaRobot } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 function AiGuidance() {
@@ -11,6 +12,8 @@ function AiGuidance() {
   const [question, setQuestion] = useState("");
   const [response, setResponse] = useState("");
   const { isPending, isSuccess, error, mutateAsync: askanything } = useAskAi();
+
+  const navigate = useNavigate();
 
   const predefinedQuestions = [
     "Roadmap for an interview",
@@ -58,8 +61,11 @@ function AiGuidance() {
         color="#ffffff"
         refresh
       />
-      <div className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
-        <ArrowLeft className="w-6 h-6" onClick={() => window.history.back()} />
+      <div
+        className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <ArrowLeft className="w-6 h-6" />
       </div>
       <section className="text-center py-10 w-full max-w-3xl">
         <h1 className="text-4xl font-bold text-[#38BDF8]">AI Guidance</h1>
