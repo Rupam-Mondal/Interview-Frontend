@@ -56,7 +56,8 @@ const Chat1 = () => {
               </label>
               <input
                 type="text"
-                className="bg-gray-800 text-white px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer w-full"
+                placeholder="Course here..."
+                className="bg-gray-800 text-white px-4 py-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
                 value={course}
                 onChange={(e) => setCourse(e.target.value)}
               />

@@ -57,9 +57,6 @@ const Navbar = () => {
                 >
                   Profile
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  Settings
-                </li>
                 <li
                   className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                   onClick={handleLogout}
