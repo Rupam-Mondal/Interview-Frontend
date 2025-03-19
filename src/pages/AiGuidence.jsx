@@ -63,7 +63,7 @@ function AiGuidance() {
       />
       <div
         className="fixed top-5 left-5 border border-white rounded-full p-3 hover:bg-white hover:text-black transition-all duration-200 cursor-pointer"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/")}    
       >
         <ArrowLeft className="w-6 h-6" />
       </div>
@@ -73,31 +73,7 @@ function AiGuidance() {
           Get AI-driven interview insights
         </p>
 
-        <div className="mt-6">
-          <label className="block text-lg font-semibold mb-2">
-            Choose Your Tech Stack
-          </label>
-          <select
-            value={techStack}
-            className="px-4 py-2 bg-gray-800 text-white border border-[#38BDF8] rounded-lg w-full"
-            onChange={(e) => setTechStack(e.target.value)}
-          >
-            <option>Frontend (React, Angular, Vue)</option>
-            <option>Backend (Node.js, Django, Flask)</option>
-            <option>Data Science & AI</option>
-            <option>Cybersecurity</option>
-            <option>Others</option>
-          </select>
-          {techStack === "Others" && (
-            <input
-              type="text"
-              placeholder="Enter your field of interest"
-              className="w-full px-4 py-2 mt-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
-              value={customTech}
-              onChange={(e) => setCustomTech(e.target.value)}
-            />
-          )}
-        </div>
+        
       </section>
 
       <section className="max-w-3xl w-full bg-gray-800 p-6 rounded-lg shadow-lg">
