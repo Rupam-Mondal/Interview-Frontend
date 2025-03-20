@@ -45,7 +45,7 @@ We welcome contributions! Follow these steps:
 2. Create a new branch: `git checkout -b feature-branch`
 3. Make your changes and commit: `git commit -m "Added new feature"`
 4. Push to the branch: `git push origin feature-branch`
-5. Open a **Pull Request**..
+5. Open a **Pull Request**.
 
 
 
