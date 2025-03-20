@@ -28,7 +28,7 @@ const Background = () => {
   const navigate = useNavigate();
   const cardData = [
     {
-      title: "User Friend",
+      title: "User Friendly",
       icon: <FaUserFriends />,
       description:
         "Our platform is designed with simplicity in mind, ensuring a smooth and intuitive user experience.",
