@@ -35,6 +35,12 @@ function Features() {
             icon: "🤖",
             route: "/AI-Guidance",
           },
+          {
+            title:"Resume ATS Checker and Improvements",
+            description:"Optimize your resume for Applicant Tracking Systems.",
+            icon:"📄",
+            route:"/Resume-ATS",
+          }
         ].map((feature, index) => (
           <div
             key={index}
